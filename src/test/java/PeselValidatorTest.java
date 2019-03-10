@@ -25,7 +25,7 @@ public class PeselValidatorTest {
 
     @Test
     public void testPeselWithWrongMonth() {
-        assertFalse(validator.validate("59017296898"));
+        assertFalse(validator.validate("59130396898"));
     }
 
 

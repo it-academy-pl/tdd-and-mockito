@@ -12,11 +12,11 @@ public class PeselValidator {
             return false;
         }
 
-        if (!checkPeselDay(pesel)) {
+        if (!checkPeselMonth(pesel)) {
             return false;
         }
 
-        if (!checkPeselMonth(pesel)) {
+        if (!checkPeselDay(pesel)) {
             return false;
         }
 
@@ -68,10 +68,8 @@ public class PeselValidator {
 
     private boolean checkPeselMonth(String pesel) {
         String stringPeselMonth = pesel.substring(2, 4);
-        String stringPeselYear = pesel.substring(0, 2);
 
         int intPeselMonth = Integer.valueOf(stringPeselMonth);
-        int intPeselYear = Integer.valueOf(stringPeselYear);
 
 
         if (intPeselMonth > 12 && intPeselMonth < 21) {
@@ -126,5 +124,11 @@ public class PeselValidator {
         return true;
     }
 
+    public static void main(String[] args) {
 
+        String pesel = "59210396898";
+        String stringPeselMonth = pesel.substring(2, 4);
+
+        System.out.println(stringPeselMonth);
+    }
 }
