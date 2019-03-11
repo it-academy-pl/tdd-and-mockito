@@ -1,14 +1,32 @@
 public class PeselValidator {
 
 
-    public boolean isLengthCorrect(String pesel) {
+    public boolean validate(String pesel){
+        return isLengthCorrect(pesel)
+                        && isFormatCorrect(pesel)
+                        && isMonthCorrect(pesel)
+                        && isDayCorrect(pesel)
+                        && isControlDigitCorrect(pesel);
+    }
+
+
+    public boolean validate(String pesel, String gender){
+        return isLengthCorrect(pesel)
+                && isFormatCorrect(pesel)
+                && isMonthCorrect(pesel)
+                && isDayCorrect(pesel)
+                && isControlDigitCorrect(pesel)
+                && whatGender(pesel).equals(gender);
+    }
+
+    private boolean isLengthCorrect(String pesel) {
 
         if (pesel.length() == 11) return true;
         else return false;
     }
 
 
-    public boolean isMonthCorrect(String pesel) {
+    private boolean isMonthCorrect(String pesel) {
 
         int monthNumber = Integer.valueOf(pesel.substring(2,4));
 
@@ -21,7 +39,7 @@ public class PeselValidator {
     }
 
 
-    public String whatGender(String pesel, String gender) {
+    private String whatGender(String pesel) {
 
         char genderDigit = pesel.charAt(9);
 
@@ -35,7 +53,7 @@ public class PeselValidator {
 
 
     //checking if day number is correct assuming that February has always 29 days.
-    public boolean isDayCorrect(String pesel) {
+    private boolean isDayCorrect(String pesel) {
 
         int dayNumber = Integer.valueOf(pesel.substring(4,6));
         int monthNumber = Integer.valueOf(pesel.substring(2,4));
@@ -68,7 +86,7 @@ public class PeselValidator {
 
 
     // methotd checking if array contains certain number
-    public static boolean contains(final int[] array, final int v) {
+    private static boolean contains(final int[] array, final int v) {
 
         for(int i : array) {
             if (i == v) return true;
@@ -77,18 +95,17 @@ public class PeselValidator {
     }
 
 
-    public boolean isFormatCorrect(String pesel) {
+    private boolean isFormatCorrect(String pesel) {
         try{
             long peselInteger = Long.valueOf(pesel);
             return true;
         } catch(NumberFormatException e){
             return false;
-
         }
     }
 
 
-    public boolean isControlDigitCorrect(String pesel){
+    private boolean isControlDigitCorrect(String pesel){
 
         int first = Integer.valueOf(pesel.substring(0,1));
         int second = Integer.valueOf(pesel.substring(1,2));
