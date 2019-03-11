@@ -11,12 +11,7 @@ public class PeselValidator {
 
 
     public boolean validate(String pesel, String gender){
-        return isLengthCorrect(pesel)
-                && isFormatCorrect(pesel)
-                && isMonthCorrect(pesel)
-                && isDayCorrect(pesel)
-                && isControlDigitCorrect(pesel)
-                && whatGender(pesel).equals(gender);
+        return validate(pesel) && whatGender(pesel).equals(gender);
     }
 
     private boolean isLengthCorrect(String pesel) {
