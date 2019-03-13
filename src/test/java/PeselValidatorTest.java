@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-// generated valid pesel: 03280735572
+// generated male valid pesel: 03280735572
+// generated female valid pesel: 87051788242
 
 public class PeselValidatorTest {
 
@@ -17,69 +18,41 @@ public class PeselValidatorTest {
 
     @Test
     public void checkIfPeselCorrect() {
-        String pesel = "03280735572";
-        assertTrue(validator.validate(pesel));
+        assertTrue(validator.validate("03280735572"));
     }
 
     @Test
-    public void checkIfPeselCorrectWithGenderCheck() {
-        String pesel = "03280735572";
-        String gender = "male";
-        assertTrue(validator.validate(pesel, gender));
+    public void testIfMaleGenderIsCorrect() {
+        assertTrue(validator.validateWithGender("03280735572", PeselValidator.Gender.MALE));
+    }
+
+    @Test
+    public void testIfFemaleGenderIsCorrect() {
+        assertTrue(validator.validateWithGender("87051788242", PeselValidator.Gender.FEMALE));
     }
 
     @Test
     public void checkIfLengthWrong() {
-        //given pesel with 10 digits instead of 11
-        String pesel = "0328073557";
-
-        //when &then
-        assertFalse(validator.validate(pesel));
+        assertFalse(validator.validate("0328073557"));
     }
 
     @Test
     public void checkIfFormatWrong() {
-        //given
-        String pesel = "a3280735572";
-
-        //when & then
-        assertFalse(validator.validate(pesel));
+        assertFalse(validator.validate("a3280735572"));
     }
 
     @Test
     public void checkIfMonthWrong() {
-        //given pesel with wrong month number
-        String pesel = "03000735572";
-
-        //when & then
-        assertFalse(validator.validate(pesel));
+        assertFalse(validator.validate("03000735572"));
     }
 
     @Test
     public void checkIfDayWrong() {
-        //given pesel with wrong day number
-        String pesel = "03223035572";
-
-        //when & then
-        assertFalse(validator.validate(pesel));
-    }
-
-    @Test
-    public void checkIfGenderWrong() {
-        //given pesel with male gender digit
-        String pesel = "03000735572";
-        String gender = "female";
-
-        //when & then
-        assertFalse(validator.validate(pesel, gender));
+        assertFalse(validator.validate("03223035572"));
     }
 
     @Test
     public void checkIfLastDigitWrong() {
-        //given pesel with last digit wrong
-        String pesel = "03280735570";
-
-        //when && then
-        assertFalse(validator.validate(pesel));
+        assertFalse(validator.validate("03280735570"));
     }
 }
