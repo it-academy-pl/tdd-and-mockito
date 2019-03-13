@@ -57,12 +57,9 @@ public class PeselValidator {
         int dayNumber = Integer.valueOf(pesel.substring(4, 6));
         int monthNumber = Integer.valueOf(pesel.substring(2, 4));
         int maxDaysInMonth;
-        List<Integer> monthsWith29Days = Arrays.asList(2);
-        List<Integer> monthsWith30Days = Arrays.asList(4, 6, 9, 11);
-        List<Integer> monthsWith31Days = Arrays.asList(1, 3, 5, 7, 8, 10, 12);
-        List<Integer> peselMonths29 = getValidPeselMonthNumbers(monthsWith29Days);
-        List<Integer> peselMonths30 = getValidPeselMonthNumbers(monthsWith30Days);
-        List<Integer> peselMonths31 = getValidPeselMonthNumbers(monthsWith31Days);
+        List<Integer> peselMonths29 = getValidPeselMonthNumbers(Arrays.asList(2));
+        List<Integer> peselMonths30 = getValidPeselMonthNumbers(Arrays.asList(4, 6, 9, 11));
+        List<Integer> peselMonths31 = getValidPeselMonthNumbers(Arrays.asList(1, 3, 5, 7, 8, 10, 12));
 
         if (peselMonths29.stream().anyMatch(month -> month == monthNumber)) {
             maxDaysInMonth = 29;
@@ -80,7 +77,7 @@ public class PeselValidator {
     private List<Integer> getValidPeselMonthNumbers(List<Integer> months) {
         List<Integer> peselMonths = new ArrayList<>();
 
-        months.stream().forEach(month -> {
+        months.forEach(month -> {
             peselMonths.add(month);
             peselMonths.add(month+20);
             peselMonths.add(month+40);
