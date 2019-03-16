@@ -6,7 +6,7 @@ public class Task {
     private long id;
     private String description;
     private double expectedResult;
-    int marginOfError;
+    private double marginOfError;
 
     public Task(String description, double expectedResult, int marginOfError) {
         this.description = description;
@@ -38,11 +38,11 @@ public class Task {
         this.expectedResult = expectedResult;
     }
 
-    public int getMarginOfError() {
+    public double getMarginOfError() {
         return marginOfError;
     }
 
-    public void setMarginOfError(int marginOfError) {
+    public void setMarginOfError(double marginOfError) {
         this.marginOfError = marginOfError;
     }
 
@@ -51,14 +51,13 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id &&
-                Double.compare(task.expectedResult, expectedResult) == 0 &&
-                marginOfError == task.marginOfError &&
+        return Double.compare(task.expectedResult, expectedResult) == 0 &&
+                Double.compare(task.marginOfError, marginOfError) == 0 &&
                 Objects.equals(description, task.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, expectedResult, marginOfError);
+        return Objects.hash(description, expectedResult, marginOfError);
     }
 }
