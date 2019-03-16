@@ -1,3 +1,5 @@
+package service;
+
 import dao.TaskDao;
 import model.PerformedTask;
 import model.Task;
@@ -5,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TestsService {
-    final Logger logger = LoggerFactory.getLogger(Calculator.class);
+    final Logger logger = LoggerFactory.getLogger(TestsService.class);
 
     private TaskDao taskDao;
 

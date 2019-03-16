@@ -1,3 +1,5 @@
+package service;
+
 import exception.PeselExistsException;
 import model.Student;
 
