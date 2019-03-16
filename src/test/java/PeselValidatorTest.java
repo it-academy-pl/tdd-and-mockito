@@ -32,6 +32,11 @@ public class PeselValidatorTest {
     }
 
     @Test
+    public void isDataCorrect() {
+        assertFalse(validator.isDateCorrect("87234788242")); // Data zła
+        assertTrue(validator.isDateCorrect("87431788242"));  // Data prawidłowa
+    }
+    @Test
     public void checkIfLengthWrong() {
         assertFalse(validator.validate("0328073557"));
     }
