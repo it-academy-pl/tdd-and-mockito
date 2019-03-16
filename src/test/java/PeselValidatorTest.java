@@ -60,4 +60,12 @@ public class PeselValidatorTest {
     public void checkIfLastDigitWrong() {
         assertFalse(validator.validate("03280735570"));
     }
+
+    @Test
+    public void checkPeselWith30DaysInMonth() {
+        assertTrue(validator.validate(null));
+    }
+
+
+
 }
