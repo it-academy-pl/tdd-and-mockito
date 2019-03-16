@@ -32,11 +32,6 @@ public class PeselValidatorTest {
     }
 
     @Test
-    public void isDataCorrect() {
-        assertFalse(validator.isDateCorrect("87234788242")); // Data zła
-        assertTrue(validator.isDateCorrect("87431788242"));  // Data prawidłowa
-    }
-    @Test
     public void checkIfLengthWrong() {
         assertFalse(validator.validate("0328073557"));
     }
@@ -60,12 +55,6 @@ public class PeselValidatorTest {
     public void checkIfLastDigitWrong() {
         assertFalse(validator.validate("03280735570"));
     }
-
-    @Test
-    public void checkPeselWith30DaysInMonth() {
-        assertTrue(validator.validate(null));
-    }
-
 
 
 }

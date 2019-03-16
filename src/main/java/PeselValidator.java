@@ -1,19 +1,8 @@
-import com.sun.javafx.binding.StringFormatter;
-import com.sun.javafx.tools.packager.PackagerException;
-
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.zip.DataFormatException;
 
 public class PeselValidator {
-
 
     public boolean validate(String pesel) {
         return isLengthCorrect(pesel)
@@ -39,40 +28,11 @@ public class PeselValidator {
     public enum Gender {
         MALE, FEMALE
     }
-    public boolean isDateCorrect(String pesel) {
-        String data = pesel.substring(0,2)+getMonthNumber(pesel)+pesel.substring(4,6);
-        System.out.println("Wpisana data z pesel: " +data);
-
-        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyMMdd");
-        try {
-                dateTimeFormatter.parse(data);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
 
     private boolean isLengthCorrect(String pesel) {
         return pesel.length() == 11;
     }
 
-    private String getMonthNumber(String pesel) {
-        int monthNumber = Integer.valueOf(pesel.substring(2, 4));
-        final DecimalFormat decimalFormat = new DecimalFormat("00");
-        if (monthNumber > 20 && monthNumber < 33) {
-            monthNumber-=20;
-        } else if (monthNumber > 40 && monthNumber < 53) {
-            monthNumber-=40;
-        } else if (monthNumber > 60 && monthNumber < 73) {
-            monthNumber-=60;
-        } else if (monthNumber > 80 && monthNumber < 93) {
-            monthNumber-=80;
-        }
-        String month = decimalFormat.format(monthNumber);
-        return month;
-    }
-
-    @Deprecated
     private boolean isMonthCorrect(String pesel) {
         int monthNumber = Integer.valueOf(pesel.substring(2, 4));
 
@@ -128,7 +88,7 @@ public class PeselValidator {
 
     private boolean isFormatCorrect(String pesel) {
         try {
-            long peselNumber = Long.valueOf(pesel);
+            Long.valueOf(pesel);
             return true;
         } catch (NumberFormatException e) {
             return false;
