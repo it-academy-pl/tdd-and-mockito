@@ -38,6 +38,7 @@ public class TestsServiceTest {
         }
     };
 
+    //This is first test using fakeTaskDao (Mockito not needed at all)
     @Test
     public void checkIfTaskWasSolvedCorrectlyUsingFakeTaskDao() {
         //Arrange
@@ -53,6 +54,8 @@ public class TestsServiceTest {
          */
     }
 
+    //This is test which is doing the same as test above, but we describe its behaviour using Mockito's @Mock and
+    //when/thenReturn syntax
     @Test
     public void checkIfTaskWasSolvedCorrectlyUsingMockito() {
         //TaskDao taskDaoMocked = mock(TaskDao.class); - this is an old-fashioned way of creating mock
@@ -70,6 +73,7 @@ public class TestsServiceTest {
         assertTrue(performedTask.isPassed());
     }
 
+    //This using Spy in Mockito - see more at: https://www.baeldung.com/mockito-spy
     @Test
     public void checkIfTaskWasSolvedCorrectlyUsingMockitoSpy() {
         doReturn(new Task("some task to be solved", 100, 5))
