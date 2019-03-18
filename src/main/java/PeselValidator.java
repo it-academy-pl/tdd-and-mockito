@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class PeselValidator {
 
@@ -40,12 +42,9 @@ public class PeselValidator {
     }
 
     private boolean checkPeselType(String pesel) {
-        String firstHalfPeselStr = pesel.substring(0, 5);
-        String secondHalfPeselStr = pesel.substring(5, 11);
 
         try {
-            int firstHalfPesel = Integer.valueOf(firstHalfPeselStr);
-            int secondHalfPesel = Integer.valueOf(secondHalfPeselStr);
+            long peselNumber = Long.valueOf(pesel);
 
         }catch (NumberFormatException e) {
             System.out.println("Incorrect type.");
@@ -93,6 +92,7 @@ public class PeselValidator {
     }
 
     private boolean checkPeselLastNumber(String pesel) {
+
         String firstNumberStr = pesel.substring(0, 1);
         String secondNumberStr = pesel.substring(1, 2);
         String thirdNumberStr = pesel.substring(2, 3);
@@ -124,11 +124,4 @@ public class PeselValidator {
         return true;
     }
 
-    public static void main(String[] args) {
-
-        String pesel = "59210396898";
-        String stringPeselMonth = pesel.substring(2, 4);
-
-        System.out.println(stringPeselMonth);
-    }
 }
