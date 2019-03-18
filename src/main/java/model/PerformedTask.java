@@ -3,6 +3,7 @@ package model;
 import java.util.Objects;
 
 public class PerformedTask {
+
     private long id;
     private long taskId;
     private long studentId;
@@ -71,4 +72,5 @@ public class PerformedTask {
     public int hashCode() {
         return Objects.hash(taskId, studentId, calculatedResult, passed);
     }
+
 }
