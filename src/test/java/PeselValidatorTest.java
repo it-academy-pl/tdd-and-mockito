@@ -56,5 +56,4 @@ public class PeselValidatorTest {
         assertFalse(validator.validate("03280735570"));
     }
 
-
 }

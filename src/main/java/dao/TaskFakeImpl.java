@@ -1,6 +1,5 @@
 package dao;
 
-import model.PerformedTask;
 import model.Task;
 
 public class TaskFakeImpl implements TaskDao {
@@ -14,4 +13,5 @@ public class TaskFakeImpl implements TaskDao {
     public Task save(Task task) {
         throw new UnsupportedOperationException();
     }
+
 }

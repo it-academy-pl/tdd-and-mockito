@@ -3,7 +3,9 @@ package dao;
 import model.Task;
 
 public interface TaskDao {
-    public Task getById(long id);
 
-    public Task save(Task task) throws UnsupportedOperationException;
+    Task getById(long id);
+
+    Task save(Task task) throws UnsupportedOperationException;
+
 }

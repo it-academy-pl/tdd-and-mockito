@@ -3,6 +3,7 @@ package model;
 import java.util.Objects;
 
 public class Task {
+
     private long id;
     private String description;
     private double expectedResult;
@@ -60,4 +61,5 @@ public class Task {
     public int hashCode() {
         return Objects.hash(description, expectedResult, marginOfError);
     }
+
 }
