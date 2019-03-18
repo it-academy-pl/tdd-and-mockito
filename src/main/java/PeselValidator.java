@@ -1,127 +1,113 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PeselValidator {
 
-
     public boolean validate(String pesel) {
-
-        if (!checkPeselLength(pesel)) {
-            return false;
-        }
-
-        if (!checkPeselType(pesel)) {
-            return false;
-        }
-
-        if (!checkPeselMonth(pesel)) {
-            return false;
-        }
-
-        if (!checkPeselDay(pesel)) {
-            return false;
-        }
-
-        if (!checkPeselLastNumber(pesel)) {
-            return false;
-        }
-
-
-        return true;
+        return isLengthCorrect(pesel)
+                && isFormatCorrect(pesel)
+                && isMonthCorrect(pesel)
+                && isDayCorrect(pesel)
+                && isControlDigitCorrect(pesel);
     }
 
-
-    private boolean checkPeselLength(String pesel) {
-
-        if (pesel.length() != 11) {
-            throw new NumberFormatException();
-
+    // method validateWithGender copied from rb_pesel branch
+    public boolean validateWithGender(String pesel, Gender gender) {
+        if(!validate(pesel)) return false;
+        if(gender.equals(Gender.MALE)) {
+            return Character.getNumericValue(pesel.charAt(9))%2!=0;
+        }
+        else if(gender.equals(Gender.FEMALE)) {
+            return Character.getNumericValue(pesel.charAt(9))%2==0;
         } else {
-            return true;
+            throw new RuntimeException("unknown gender");
         }
     }
 
-    private boolean checkPeselType(String pesel) {
+    public enum Gender {
+        MALE, FEMALE
+    }
 
+    private boolean isLengthCorrect(String pesel) {
+        return pesel.length() == 11;
+    }
+
+    private boolean isMonthCorrect(String pesel) {
+        int monthNumber = Integer.valueOf(pesel.substring(2, 4));
+
+        if (monthNumber > 0 && monthNumber < 13) {
+            return true;
+        } else if (monthNumber > 20 && monthNumber < 33) {
+            return true;
+        } else if (monthNumber > 40 && monthNumber < 53) {
+            return true;
+        } else if (monthNumber > 60 && monthNumber < 73) {
+            return true;
+        } else if (monthNumber > 80 && monthNumber < 93) {
+            return true;
+        }
+            return false;
+    }
+
+    //checking if day number is correct assuming that February has always 29 days.
+    private boolean isDayCorrect(String pesel) {
+        int dayNumber = Integer.valueOf(pesel.substring(4, 6));
+        int monthNumber = Integer.valueOf(pesel.substring(2, 4));
+        int maxDaysInMonth;
+        List<Integer> peselMonths29 = getValidPeselMonthNumbers(Arrays.asList(2));
+        List<Integer> peselMonths30 = getValidPeselMonthNumbers(Arrays.asList(4, 6, 9, 11));
+        List<Integer> peselMonths31 = getValidPeselMonthNumbers(Arrays.asList(1, 3, 5, 7, 8, 10, 12));
+
+        if (peselMonths29.stream().anyMatch(month -> month == monthNumber)) {
+            maxDaysInMonth = 29;
+        } else if (peselMonths30.stream().anyMatch(month -> month == monthNumber)) {
+            maxDaysInMonth = 30;
+        } else if (peselMonths31.stream().anyMatch(month -> month == monthNumber)) {
+            maxDaysInMonth = 31;
+        } else {
+            return false;
+        }
+
+        return dayNumber > 0 && dayNumber <= maxDaysInMonth;
+    }
+
+    private List<Integer> getValidPeselMonthNumbers(List<Integer> months) {
+        List<Integer> peselMonths = new ArrayList<>();
+
+        months.forEach(month -> {
+            peselMonths.add(month);
+            peselMonths.add(month+20);
+            peselMonths.add(month+40);
+            peselMonths.add(month+60);
+            peselMonths.add(month+80);
+        });
+
+        return peselMonths;
+    }
+
+    private boolean isFormatCorrect(String pesel) {
         try {
-            long peselNumber = Long.valueOf(pesel);
-
-        }catch (NumberFormatException e) {
-            System.out.println("Incorrect type.");
-        }
-
-        return true;
-    }
-
-
-    private boolean checkPeselDay(String pesel) {
-        String peselDay = pesel.substring(4, 6);
-        int peselDayOfMonth = Integer.valueOf(peselDay);
-
-        if (peselDayOfMonth > 12) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean checkPeselMonth(String pesel) {
-        String stringPeselMonth = pesel.substring(2, 4);
-
-        int intPeselMonth = Integer.valueOf(stringPeselMonth);
-
-
-        if (intPeselMonth > 12 && intPeselMonth < 21) {
-            return false;
-
-        }else if (intPeselMonth > 32 && intPeselMonth < 41) {
-            return false;
-
-        }else if (intPeselMonth > 52 && intPeselMonth < 61) {
-            return false;
-
-        }else if (intPeselMonth > 71 && intPeselMonth < 81) {
-            return false;
-
-        }else if (intPeselMonth > 92) {
-            return false;
-
-        }else
-
+            Long.valueOf(pesel);
             return true;
-    }
-
-    private boolean checkPeselLastNumber(String pesel) {
-
-        String firstNumberStr = pesel.substring(0, 1);
-        String secondNumberStr = pesel.substring(1, 2);
-        String thirdNumberStr = pesel.substring(2, 3);
-        String fourthNumberStr = pesel.substring(3, 4);
-        String fifthNumberStr = pesel.substring(4, 5);
-        String sixthNumberStr = pesel.substring(5, 6);
-        String seventhNumberStr = pesel.substring(6, 7);
-        String eighthNumberStr = pesel.substring(7, 8);
-        String ninethNumberStr = pesel.substring(8, 9);
-        String tenthNumberStr = pesel.substring(9, 10);
-        String eleventhNumberStr = pesel.substring(10, 11);
-
-        int firstNumber = Integer.valueOf(firstNumberStr);
-        int secondNumber = Integer.valueOf(secondNumberStr);
-        int thirdNumber = Integer.valueOf(thirdNumberStr);
-        int fourthNumber = Integer.valueOf(fourthNumberStr);
-        int fifthNumber = Integer.valueOf(fifthNumberStr);
-        int sixthNumber = Integer.valueOf(sixthNumberStr);
-        int seventhNumber = Integer.valueOf(seventhNumberStr);
-        int eighthNumber = Integer.valueOf(eighthNumberStr);
-        int ninethNumber = Integer.valueOf(ninethNumberStr);
-        int tenthNumber = Integer.valueOf(tenthNumberStr);
-        int eleventhNumber = Integer.valueOf(eleventhNumberStr);
-
-        if ((firstNumber + (secondNumber * 3) + (thirdNumber * 7) + (fourthNumber * 9) + fifthNumber + (sixthNumber * 3) + (seventhNumber * 7) + (eighthNumber * 9) + ninethNumber + (tenthNumber * 3 ) + eleventhNumber) % 10 != 0) {
+        } catch (NumberFormatException e) {
             return false;
         }
+    }
 
-        return true;
+    private boolean isControlDigitCorrect(String pesel) {
+        int givenControlDigit = Character.getNumericValue(pesel.charAt(10));
+        int[] formulaMultipliers = {9, 7, 3, 1, 9, 7, 3, 1, 9, 7}; // formula: (9×a + 7×b + 3×c + 1×d + 9×e + 7×f + 3×g + 1×h + 9×i + 7×j)%10
+        int calculatedControlDigit = 0;
+
+        for (int i = 0; i < formulaMultipliers.length; i++) {
+            calculatedControlDigit += Character.getNumericValue(pesel.charAt(i)) * formulaMultipliers[i];
+            if (i == formulaMultipliers.length - 1) {
+                calculatedControlDigit %= 10;
+            }
+        }
+
+        return givenControlDigit == calculatedControlDigit ;
     }
 
 }
