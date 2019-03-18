@@ -1,11 +1,9 @@
 package dao;
 
 import model.PerformedTask;
+import model.Task;
 
 public interface PerformedTaskDao {
-
-    PerformedTask getById(long id);
-
-    PerformedTask save(PerformedTask performedTask);
-
+    public PerformedTask getById(long id);
+    public PerformedTask save(PerformedTask performedTask);
 }
