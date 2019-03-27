@@ -56,5 +56,10 @@ public class PeselValidatorTest {
         assertFalse(validator.validate("03280735570"));
     }
 
+    @Test
+    public void isNotNull() {
+        assertFalse(validator.validate(null));
+    }
+
 
 }

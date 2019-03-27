@@ -5,7 +5,8 @@ import java.util.List;
 public class PeselValidator {
 
     public boolean validate(String pesel) {
-        return isLengthCorrect(pesel)
+        return isNotNull(pesel)
+                && isLengthCorrect(pesel)
                 && isFormatCorrect(pesel)
                 && isMonthCorrect(pesel)
                 && isDayCorrect(pesel)
@@ -29,6 +30,7 @@ public class PeselValidator {
         MALE, FEMALE
     }
 
+    private boolean isNotNull(String pesel) { return pesel != null;}
     private boolean isLengthCorrect(String pesel) {
         return pesel.length() == 11;
     }
@@ -108,5 +110,7 @@ public class PeselValidator {
         }
 
         return givenControlDigit == calculatedControlDigit ;
+
+
     }
 }

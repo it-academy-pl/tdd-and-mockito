@@ -14,6 +14,8 @@ public class TestsService {
     // "Dependendiwhatsit?" - There is good article on that :)
     // https://www.jamesshore.com/Blog/Dependency-Injection-Demystified.html
     // which explains why it is handy in isolating classes in context of unit testing
+
+
     public TestsService(TaskDao taskDao) {
         this.taskDao = taskDao;
     }
@@ -22,8 +24,9 @@ public class TestsService {
     public PerformedTask submitTask(long studentId, long taskId, double calculatedResult) {
         logger.info("Submitting task for studentId {} taskId {} and calculated result {}", studentId, taskId, calculatedResult);
         Task task = taskDao.getById(taskId);
-        boolean isPassed = calculateIfResultIsCorrect(task.getExpectedResult(), calculatedResult, task.getMarginOfError());
+        boolean isPassed = calculateIfResultIsCorrect(task.getExpectedResult(), calculatedResult, task.getMarginOfError()); // Pytanie! Dlaczego nie przekazujemy poprostu całego obiektu klasy task, tylko wartości double jako wyniki metod klasy task? Wtedy przekazywalibyśmy dwa argumenty zamiast trzech
         //TODO(instead of just returning object here, we have to save it to the database)
+        taskDao.save(task); // czy zamieniać metodę na typu void ? jeśli tak zrobimy to testy trzeba będzie zmodyfikować
         return new PerformedTask(taskId, studentId, calculatedResult, isPassed);
     }
 

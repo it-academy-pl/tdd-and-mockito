@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.NoSuchElementException;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -79,6 +80,15 @@ public class TestsServiceTest {
 
         assertTrue(performedTask.isPassed());
     }
-
     //TODO write test using @Mock which checks the case when Task was not solved correctly
+    @Test
+    public void notSolvedCorrectly() {
+        when(taskDaoMocked.getById(1L)).thenReturn(new Task("some description of task", 100, 5));
+        TestsService testsService = new TestsService(taskDaoMocked);
+
+        PerformedTask performedTask = testsService.submitTask(1L, 1L, 80);
+        assertFalse(performedTask.isPassed());
+
+    }
+
 }
